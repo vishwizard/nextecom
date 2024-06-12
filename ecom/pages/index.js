@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div className="bg-blue-900 w-screen h-screen flex items-center">
       <div className="text-center w-full">
-        <buttn className='bg-white p-2 rounded-lg px-4' onClick={() => signIn()}>Login With Google</buttn>
+        <buttn className='bg-white p-2 rounded-lg px-4' onClick={() => signIn('google')}>Login With Google</buttn>
       </div>
     </div>
   
