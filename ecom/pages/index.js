@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react"
 import Layout from "../Components/layout"
 export default function Home() {
   const { data: session } = useSession();
-  console.log(session?.user?.image)
+  // console.log(session?.user?.image)
 
   return <Layout>
     <div className="flex justify-around items-center">
@@ -13,8 +13,6 @@ export default function Home() {
       <img src={session?.user?.image} className="w-8 h-8 rounded-lg" alt="User Image"/>
       <h2><b>{session?.user?.name}</b> </h2>
       </div>
-      
-
       </div>
   </Layout>
 

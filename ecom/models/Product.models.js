@@ -7,7 +7,7 @@ const ProductSchema = new mongoose.Schema({
     },
     description:{
         type:String,
-        required: true,
+
 
     },
     price:{
@@ -18,4 +18,4 @@ const ProductSchema = new mongoose.Schema({
     timestamps:true
 })
 
-export const Product = mongoose.model("product", ProductSchema)
+export const Product = mongoose.models.Product || mongoose.model("Product", ProductSchema);
