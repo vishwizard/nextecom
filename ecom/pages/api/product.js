@@ -30,27 +30,19 @@ export default async function handle(req, res){
    }
 
    if(method==="PUT"){
-    const images = req.body.images;
-    if(images){
-        console.log("This end point was hit");
-        const filter = {_id:req.body._id}
-
-        await Product.updateOne(filter, {...images});
-    }
-    else{
-        const {title, description, price, id} = req.body;
-        const filter = {_id:id}
-        await Product.updateOne({_id}, {title, description, price});
-    }
-    
-    res.json(true);
-}
-
-if(method==="DELETE"){
-    if(req?.query?.id){
-        await Product.deleteOne({_id:req.query.id});
+        const {title, description, price, images, _id} = req.body;
+        const filter = {_id:_id}
+        await Product.updateOne(filter, {title, description, price, images});
         res.json(true);
     }
+    
+    if(method==="DELETE"){
+        if(req?.query?.id){
+            await Product.deleteOne({_id:req.query.id});
+            res.json(true);
+        }
+    }
 }
 
-}
+
+

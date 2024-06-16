@@ -24,7 +24,7 @@ export const config = {
 };
 
 // Middleware to handle file upload
-const uploadMiddleware = upload.single('file');
+const uploadMiddleware = upload.array('files');
 
 function runMiddleware(req, res, fn) {
   return new Promise((resolve, reject) => {
@@ -42,7 +42,8 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       await runMiddleware(req, res, uploadMiddleware);
-      res.status(200).json({ success: true, filePath: `/images/${req.file.filename}` });
+      const filenames = req.files.map((file)=>`/images/${file.filename}`);
+      res.status(200).json({ success: true, filenames });
     } catch (error) {
       res.status(500).json({ success: false, error: `Something went wrong! ${error.message}` });
     }

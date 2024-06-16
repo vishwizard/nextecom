@@ -20,7 +20,7 @@ label{
 }
 
 table.basic tr td{
-    @apply border p-1 border-blue-200;
+    @apply border p-1 border-blue-200 ;
 }
 
 table.basic{
@@ -32,7 +32,7 @@ table.basic thead tr td{
 }
 
 table.basic a{
-    @apply bg-blue-900 text-white inline-flex gap-1 rounded-md text-sm items-center p-1 px-2;
+    @apply bg-blue-900 text-white inline-flex gap-1 rounded-md text-sm items-center h-full p-1 px-2;
 }
 
 .btn-red{
