@@ -10,9 +10,9 @@ export default async function handle(req, res){
     await mongooseConnect();
    const {method} = req;
    if(method==="POST"){
-    const {title,description,price} = req.body;
+    const {title,description,price,images} = req.body;
    const productDoc = await Product.create({
-        title, description, price
+        title, description, price, images
     })
 
     res.json(productDoc);
@@ -30,8 +30,19 @@ export default async function handle(req, res){
    }
 
    if(method==="PUT"){
-    const {title, description, price, _id} = req.body;
-    await Product.updateOne({_id}, {title, description, price});
+    const images = req.body.images;
+    if(images){
+        console.log("This end point was hit");
+        const filter = {_id:req.body._id}
+
+        await Product.updateOne(filter, {...images});
+    }
+    else{
+        const {title, description, price, id} = req.body;
+        const filter = {_id:id}
+        await Product.updateOne({_id}, {title, description, price});
+    }
+    
     res.json(true);
 }
 
@@ -41,8 +52,5 @@ if(method==="DELETE"){
         res.json(true);
     }
 }
-
-
-
 
 }
