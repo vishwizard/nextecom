@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios'
 import { useRouter } from 'next/router';
-// import { UploadDropzone } from '@uploadthing/react';
-// import UploadImage from './ImageUpload';
-
+import HashLoader from "react-spinners/HashLoader";
+import {ReactSortable} from 'react-sortablejs'
 
 export default function ProductForm({
     title: currentTitle,
@@ -11,6 +10,7 @@ export default function ProductForm({
     price: currentPrice,
     _id: _id,
     images: currentImages,
+    category: currentCategory
 }) {
 
     const [title, setTitle] = useState(currentTitle || '');
@@ -19,11 +19,23 @@ export default function ProductForm({
 
     const [price, setPrice] = useState(currentPrice || '');
 
-    const [images, setImages] = useState(currentImages || [null]);
+    const [images, setImages] = useState(currentImages || '');
+
+    const [categories, setCategories] = useState('');
+
+    const [category, setCategory] = useState(currentCategory || '');
 
     const [goBack, setGoBack] = useState(false);
 
     const router = useRouter();
+
+    const [loading, setLoading] = useState(false);
+
+    useEffect(()=>{
+        const data = axios.get('/api/category').then(res=>{
+            setCategories(res.data);
+        })
+    }, []);
 
     async function SaveProduct(e) {
         e.preventDefault();
@@ -32,6 +44,7 @@ export default function ProductForm({
             description,
             price,
             images,
+            category
         };
         if (_id) {
             await axios.put('/api/product', { ...data, _id })
@@ -51,6 +64,7 @@ export default function ProductForm({
     }
 
     async function uploadImages(e) {
+        setLoading(true);
         const files = e.target.files;
         const data = new FormData;
         // console.log(files);
@@ -72,7 +86,12 @@ export default function ProductForm({
             // const updateDb = await axios.put('/api/product', {_id, images});
             // console.log(updateDb);
         }
+        setLoading(false);
 
+    }
+
+    function updateImages(images){
+        setImages(images);
     }
 
     const deleteImage = (image) => {
@@ -99,6 +118,22 @@ export default function ProductForm({
                     value={description}
                     onChange={e => { setDesc(e.target.value) }} />
 
+                <label>Select Category</label>
+                <select value={category} onChange={
+                    (e)=>{
+                        setCategory(e.target.value);
+                    }
+                }>
+                    <option value=''>Uncategorized</option>
+                    {categories? categories.map((i)=>{
+                        return (
+                            <option value={i._id}>{i.Title}</option>
+                        )
+                    }) : ''}
+                </select>
+
+
+
                 <label>Photos</label>
                 <div className='mb-4 flex gap-2 flex-wrap'>
                     <label className='h-24 w-24 border transition-transform duration-300 hover:scale-105 border-gray-400 rounded-lg flex items-center justify-center text-gray-700 cursor-pointer'>
@@ -113,6 +148,7 @@ export default function ProductForm({
                         <label className='text-sm text-gray-600'>No Images found for this product</label>
                     )} */
                     }
+                    <ReactSortable list={images} setList={updateImages} className='flex items-center gap-1 flex-wrap'>
                     {images.length > 0 && images[0] !== null ? images.map((image, index) => (
                         <div key={index} className="h-24 border border-gray-400 rounded-lg flex items-center overflow-hidden justify-center text-white cursor-pointer relative">
                             <img src={image} alt="Product Image" className="w-full h-full object-cover" />
@@ -128,6 +164,13 @@ export default function ProductForm({
                         </div>
                     )) : (<label className='text-sm text-gray-600'>No Images found for this product</label>
                     )}
+                    </ReactSortable>
+
+                    {loading && (<div className='h-24'>
+                        <HashLoader></HashLoader>
+                    </div>)}
+
+
                 </div>
 
 

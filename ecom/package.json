@@ -22,6 +22,10 @@
     "next-connect": "^1.0.0-next.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-sortablejs": "^6.1.4",
+    "react-spinners": "^0.13.8",
+    "sortablejs": "^1.15.2",
+    "sweetalert2": "^11.12.0",
     "uploadthing": "^6.12.0"
   },
   "devDependencies": {
