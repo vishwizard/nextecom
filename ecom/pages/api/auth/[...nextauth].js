@@ -1,8 +1,11 @@
 import clientPromise from "@/lib/db"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
-import NextAuth from "next-auth"
+import NextAuth, { getServerSession } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
+
+const adminEmails = ['deyamrit959@gmail.com'];
+
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -17,6 +20,24 @@ export const authOptions = {
     // ...add more providers here
   ],
   adapter:MongoDBAdapter(clientPromise),
+  callbacks:{
+    session:({session,token,user})=>{
+      if(adminEmails.includes(session?.user?.email)){
+        return session;
+      }
+      else{
+        return false;
+      }
+    }
+  }
 }
 
 export default NextAuth(authOptions)
+
+export async function isAdmin(req,res){
+  const session = await getServerSession(req,res,authOptions);
+  // console.log(session);
+  if(!adminEmails.includes(session?.user?.email)){
+    throw "You are not authorised to access this section";
+  }
+}

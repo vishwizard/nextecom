@@ -1,20 +1,23 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from "next/router"
-export default function Nav() {
+import { signOut } from 'next-auth/react';
+import Logo from './Logo';
+export default function Nav({NavStatus}) {
     const inactiveLink = 'p-2 flex gap-1 items-center';
     const activeLink = inactiveLink + ' bg-white text-blue-900 rounded-l-lg';
     const svg = 'fill-current w-5 h-5';
     const router = useRouter();
     const path = router.pathname;
+
+    async function Logout(){
+        await router.push('/');
+        signOut();
+    }
     return (
-        <aside className='text-white p-4 pr-0'>
-            <a className="flex gap-1 items-center mb-4 mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className={svg} id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" ><path d="M24,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H0V2H1.222a1,1,0,0,1,.993.883L3.8,16.351A3,3,0,0,0,6.778,19H20V17H6.778a1,1,0,0,1-.993-.884L5.654,15H21.836Z" /><circle cx="7" cy="22" r="2" /><circle cx="17" cy="22" r="2" /></svg>
-                <span>
-                    E-Commerce Admin
-                </span>
-            </a>
+        <aside className={(NavStatus? '' : 'hidden') +' text-white p-4 pr-0 w-full absolute -left-0 -top-0 bg-gray-400 h-screen md:block md:bg-blue-900 md:w-auto md:static' }>
+          
+            <Logo extraClass="mb-1"></Logo>
             <nav className="flex flex-col gap-2">
                 <Link className={path == '/' ? activeLink : inactiveLink} href={'/'}>
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className={svg} viewBox="0 0 50 50">
@@ -50,6 +53,16 @@ export default function Nav() {
 
                     Settings
                 </Link>
+                <button className={inactiveLink} onClick={() => {
+                    Logout();
+                }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                    </svg>
+
+
+                    Logout
+                </button>
             </nav>
         </aside>
     )

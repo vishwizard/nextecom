@@ -1,7 +1,6 @@
-import { Timestamp } from "mongodb";
 import mongoose from "mongoose";
 
-const CategorySchema = mongoose.Schema({
+const CategorySchema = new mongoose.Schema({
     Title:{
         type: String,
         required: true
@@ -9,6 +8,10 @@ const CategorySchema = mongoose.Schema({
     Parent:{
         type: mongoose.Types.ObjectId,
         ref: "Category"
+    },
+    Properties:{
+        type: [{}],
+        default:[],
     }
 },{
     timestamps:true

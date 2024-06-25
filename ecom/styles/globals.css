@@ -38,3 +38,8 @@ table.basic a{
 .btn-red{
     @apply bg-red-500 rounded-md text-white py-1 px-2;
 }
+
+.btn-default{
+
+    @apply bg-gray-400 text-white rounded-md p-2 px-4
+}

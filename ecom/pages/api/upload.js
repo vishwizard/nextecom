@@ -1,6 +1,9 @@
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { isAdmin } from "./auth/[...nextauth]";
+
+isAdmin(req,res);
 
 // Configure Multer
 const storage = multer.diskStorage({

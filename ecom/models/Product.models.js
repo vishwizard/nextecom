@@ -22,6 +22,10 @@ const ProductSchema = new mongoose.Schema({
     category:{
         type:mongoose.Types.ObjectId,
         ref:'Category'
+    },
+
+    properties:{
+        type: {},
     }
 },{
     timestamps:true

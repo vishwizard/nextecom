@@ -1,18 +1,20 @@
 
-// import mongoose from "mongoose";
-// import clientPromise from "@/lib/db";
 import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product.models";
+import { isAdmin } from "./auth/[...nextauth]";
 
 export default async function handle(req, res){
-    // mongoose.connect(clientPromise.url);
-    // mongoose.Promise = clientPromise;
+
     await mongooseConnect();
+    isAdmin(req,res);
+
+
    const {method} = req;
    if(method==="POST"){
-    const {title,description,price,images,category} = req.body;
+    const {title,description,price,images,category,properties} = req.body;
+    console.log(req.body);
    const productDoc = await Product.create({
-        title, description, price, images,category
+        title, description, price, images,category,properties
     })
 
     res.json(productDoc);
@@ -30,9 +32,10 @@ export default async function handle(req, res){
    }
 
    if(method==="PUT"){
-        const {title, description, price, images, category, _id} = req.body;
+        const {title, description, price, images, category,properties, _id} = req.body;
+        console.log(req.body);
         const filter = {_id:_id}
-        await Product.updateOne(filter, {title, description, price, images, category});
+        await Product.updateOne(filter, {title, description, price, images, category,properties});
         res.json(true);
     }
     
@@ -43,6 +46,3 @@ export default async function handle(req, res){
         }
     }
 }
-
-
-
