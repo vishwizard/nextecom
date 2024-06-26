@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { isAdmin } from "./auth/[...nextauth]";
 
-isAdmin(req,res);
+
 
 // Configure Multer
 const storage = multer.diskStorage({
@@ -42,6 +42,8 @@ function runMiddleware(req, res, fn) {
 
 // API Route Handler
 export default async function handler(req, res) {
+
+  isAdmin(req,res);
   if (req.method === 'POST') {
     try {
       await runMiddleware(req, res, uploadMiddleware);

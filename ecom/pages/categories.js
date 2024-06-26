@@ -123,7 +123,7 @@ function Categories({ swal }) {
                             </option>
                             {categoryList.length > 0 && categoryList.map((Category) => {
                                 return (
-                                    <option value={Category._id} >
+                                    <option value={Category._id} key={Category._id} >
                                         {Category.Title}
                                     </option>
                                 )
@@ -138,7 +138,7 @@ function Categories({ swal }) {
                 <button className='btn-primary block text-sm  mb-2' onClick={addProperty} type='button'>Add Property</button>
                 {properties ? properties.map((property, index) => {
                     return (
-                        <div className='flex gap-1 mb-2'>
+                        <div className='flex gap-1 mb-2' key={index}>
                             <input placeholder='Property Name (Ex- Color)' value={property.name} onChange={(e) => {
                                 handleNameChange(index, property, e.target.value)
                             }} className='mb-0'></input>
@@ -185,9 +185,9 @@ function Categories({ swal }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {categoryList.length > 0 ? categoryList.map((Category) => {
+                        {categoryList.length > 0 ? categoryList.map((Category,index) => {
                             return (
-                                <tr>
+                                <tr key={index}>
                                     <td>
                                         {Category.Title}
                                     </td>

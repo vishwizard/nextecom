@@ -36,10 +36,9 @@ export default function ProductForm({
     const router = useRouter();
 
     const [loading, setLoading] = useState(false);
-    // console.log(currentProps);
+
     const [properties, setProperties] = useState(currentProps ? currentProps[0] : []);
 
-    // console.log(properties);
 
     // useEffects Start from here
 
@@ -55,7 +54,7 @@ export default function ProductForm({
         })
     },[category]);
 
-
+    
 
     // Functions Start from here
 
@@ -141,7 +140,7 @@ export default function ProductForm({
 
 
     function setProps(name, value) {
-        // console.log('i m king');
+
         setProperties(prev => ({
             ...prev,
             [name]: value
@@ -189,12 +188,11 @@ export default function ProductForm({
 
 
                 {propertiesToFill.length > 0 && propertiesToFill.map((property) => {
-                    // console.log(properties[property.name]);
                     return (
                         <div className='flex gap-1 items-center mb-1'>
                             {property.name}
                             <select
-                                value={properties[property.name] || property.value[0]}
+                                value={properties? properties[property.name] : property.value[0]}
                                 onChange={(e) => setProps(property.name, e.target.value)}
                                 className='mb-0'
                             >
