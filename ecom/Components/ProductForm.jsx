@@ -52,7 +52,7 @@ export default function ProductForm({
         propertiesToFill.map((property)=>{
             setProps(property.name, property.value[0]);
         })
-    },[category]);
+    },[propertiesToFill]);
 
     
 
@@ -180,16 +180,16 @@ export default function ProductForm({
                     <option value=''>Uncategorized</option>
                     {categories ? categories.map((i) => {
                         return (
-                            <option value={i._id}>{i.Title}</option>
+                            <option value={i._id} key={i._id}>{i.Title}</option>
                         )
                     }) : ''}
                 </select>
 
 
 
-                {propertiesToFill.length > 0 && propertiesToFill.map((property) => {
+                {propertiesToFill.length > 0 && propertiesToFill.map((property,index) => {
                     return (
-                        <div className='flex gap-1 items-center mb-1'>
+                        <div className='flex gap-1 items-center mb-1' key={index}>
                             {property.name}
                             <select
                                 value={properties? properties[property.name] : property.value[0]}
