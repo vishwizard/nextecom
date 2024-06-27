@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "@/style/globals.css";
 
 import { SessionProvider } from "next-auth/react"
 
