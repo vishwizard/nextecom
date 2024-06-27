@@ -38,9 +38,9 @@ export default function Layout({ children }) {
   }
   else{
     return (
-      <div className="bg-blue-900 w-screen h-screen flex items-center">
+      <div className="bg-blue-900 w-screen min-h-screen flex items-center">
         <div className="text-center w-full">
-          <buttn className='bg-white p-2 rounded-lg px-4 cursor-pointer' onClick={() => signIn('google')}>Login With Google</buttn>
+          <button className='bg-white p-2 rounded-lg px-4 cursor-pointer' onClick={() => signIn('google')}>Login With Google</button>
         </div>
       </div>
   
