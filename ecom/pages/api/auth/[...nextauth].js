@@ -1,7 +1,6 @@
 import clientPromise from "@/lib/db"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import NextAuth, { getServerSession } from "next-auth"
-import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
 const adminEmails = ['deyamrit959@gmail.com'];
@@ -19,6 +18,7 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   adapter:MongoDBAdapter(clientPromise),
   callbacks:{
     session:({session,token,user})=>{
