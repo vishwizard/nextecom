@@ -2,14 +2,11 @@
 @tailwind components;
 @tailwind utilities; */
 
-@import "tailwindcss/base";
-/* @import "./custom-base-styles.css"; */
+/* styles/global.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-@import "tailwindcss/components";
-/* @import "./custom-components.css"; */
-
-@import "tailwindcss/utilities";
-/* @import "./custom-utilities.css"; */
 
 input, textarea, select{
     @apply w-full border border-gray-400 mb-4 p-2 rounded-md;
